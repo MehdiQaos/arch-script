@@ -1,0 +1,46 @@
+#!/bin/bash
+
+echo -e "\nUpdating Pacman Configuration (this time for installation destination system)...\n"
+sed -i 's #Color Color ; s #\[multilib\] \[multilib\] ; /\[multilib\]/{n;s #Include Include }' /etc/pacman.conf
+
+sudo pacman -Sy
+
+echo -e "--save /etc/pacman.d/mirrorlist\n--country Sweden,Denmark\n--protocol https\n--score 10\n"
+reflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
+
+echo -e "\nReading all fields from the file confidentials...\n"
+read -r user uspw rtpw host tmzn rtlc < /root/confidentials
+echo -e "\nDone.\n\n"
+
+
+echo -e "127.0.0.1 localhost\n::1\tlocalhost\n127.0.1.1 $host_name.localdomain $host_name" > /etc/hosts
+#------------------------------------------------------------------------------------------------------------------------
+echo -e "\nSetting Localtime...\n"
+ln -sf /usr/share/zoneinfo/$tmzn /etc/localtime
+hwclock --systohc
+echo -e "\nDone.\n\n"
+#------------------------------------------------------------------------------------------------------------------------
+# enable US English language and locale (might be necessary for some programs like steam)
+echo -e "\nConfiguring Locale...\n"
+sed -i 's #en_US.UTF-8 en_US.UTF-8 ' /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo -e "\nDone.\n\n"
+#------------------------------------------------------------------------------------------------------------------------
+echo -e "\nAccount Management...\n"
+# set hostname
+echo -e "$host" > /etc/hostname
+# set root password
+echo -e "$rtpw\n$rtpw" | passwd root
+echo -e "\nCreating New User...\n"
+useradd -m -G wheel -s /bin/bash $user
+# set user password
+echo -e "$uspw\n$uspw" | passwd $user
+
+echo -e "root ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/00_nopasswd
+
+echo vm.swappiness=1 >> /etc/sysctl.d/99-swappiness.conf
+
+grub-install --target=i386-pc $rtlc
+echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
+grub-mkconfig -o /boot/grub/grub.cfg
