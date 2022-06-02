@@ -9,7 +9,7 @@ echo -e "--save /etc/pacman.d/mirrorlist\n--country Sweden,Denmark\n--protocol h
 reflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
 
 echo -e "\nReading all fields from the file confidentials...\n"
-read -r user uspw rtpw host tmzn rtlc < /root/confidentials
+read -r user uspw rtpw host tmzn boot_lc < /root/confidentials
 echo -e "\nDone.\n\n"
 
 
@@ -41,6 +41,6 @@ echo -e "root ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n" > /etc/
 
 echo vm.swappiness=1 >> /etc/sysctl.d/99-swappiness.conf
 
-grub-install --target=i386-pc $rtlc
+grub-install --target=i386-pc $boot_lc
 echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg

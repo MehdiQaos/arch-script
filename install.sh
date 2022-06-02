@@ -8,12 +8,14 @@ uspw="piq"
 rtpw="miq"
 #timezone
 tmzn="Africa/Casablanca"
-#root location
+#root location /dev/sda1
 rtlc=""
+#/dev/sda
+boot_lc=""
 #pckgs names file
 pckgs_file="pacstrap_pkgs"
 
-echo -e "$userName $userPassword $rootPassword $hostName $timeZone $rtlc"> ./confidentials
+echo -e "$userName $userPassword $rootPassword $hostName $timeZone $boot_lc"> ./confidentials
 #------------------------------------------------------------------------------------------------------------------------------------
 # enable options "color", "ParallelDownloads", "multilib (32-bit) repository"
 echo -e "\nModifying Pacman Configuration...\n"
