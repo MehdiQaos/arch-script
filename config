@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -e "\nUpdating Pacman Configuration (this time for installation destination system)...\n"
-sed -i 's #Color Color ; s #\[multilib\] \[multilib\] ; /\[multilib\]/{n;s #Include Include }' /etc/pacman.conf
+sed -i 's #Color Color ; s #ParallelDownloads ParallelDownloads ; s #\[multilib\] \[multilib\] ; /\[multilib\]/{n;s #Include Include }' /etc/pacman.conf
 
 echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
 echo -e "\nPerforming Initialization of Pacman Keyring...\n"
@@ -23,7 +23,6 @@ echo -e "127.0.0.1 localhost\n::1\tlocalhost\n127.0.1.1 $host_name.localdomain $
 #------------------------------------------------------------------------------------------------------------------------
 echo -e "\nSetting Localtime...\n"
 ln -sf /usr/share/zoneinfo/$tmzn /etc/localtime
-hwclock --systohc
 echo -e "\nDone.\n\n"
 #------------------------------------------------------------------------------------------------------------------------
 # enable US English language and locale (might be necessary for some programs like steam)
@@ -50,5 +49,5 @@ echo vm.swappiness=1 >> /etc/sysctl.d/99-swappiness.conf
 systemctl enable NetworkManager
 
 grub-install --target=i386-pc $grub_install_location
-echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
+#echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg

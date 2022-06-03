@@ -1,11 +1,5 @@
-linux-headers base-devel intel-ucode network-manager-applet wireless_tools wpa_supplicant dialog dosfstools xdg-utils xdg-user-dirs xf86-video-intel xorg htop bash-completion mpv gvfs xclip vulkan-intel libva-intel-driver python python-pip gvfs-mtp stow zsh curl nvim nodejs npm man-pages tree
-
-firefox noto-fonts-emoji adobe-source-han-sans-otc-fonts qbittorrent ttf-ubuntu-font-family ttf-fira-code ttf-fira-mono ttf-fira-sans zathura jdk-openjdk qpdfview android-tools alacritty zathura-pdf-mupdf zathura translate-shell intel-gpu-tools libva-utils
-#install xfce
+linux-headers base-devel intel-ucode network-manager-applet wireless_tools wpa_supplicant dialog dosfstools xdg-utils xdg-user-dirs xf86-video-intel xorg htop bash-completion mpv gvfs xclip vulkan-intel libva-intel-driver python python-pip gvfs-mtp stow zsh curl neovim nodejs npm man-pages tree
+firefox noto-fonts-emoji adobe-source-han-sans-otc-fonts qbittorrent ttf-ubuntu-font-family ttf-fira-code ttf-fira-mono ttf-fira-sans zathura jdk-openjdk android-tools alacritty zathura-pdf-mupdf zathura translate-shell intel-gpu-tools libva-utils
 xfce4 xfce4-goodies pulseaudio papirus-icon-theme arc-gtk-theme lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings materia-gtk-theme thunar-archive-plugin file-roller pavucontrol
-
-
-#sdl
 sdl2_gfx sdl2_image sdl2_ttf sdl2_mixer sdl2_image
-
 typescript-language-server

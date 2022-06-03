@@ -1,0 +1,15 @@
+lsblk
+cfdisk /dev/sda
+mkfs.ext4 -L root /dev/sda2
+mkfs.ext4 -L home /dev/sda5
+mount /dev/sda2 /mnt
+mkdir /mnt/home
+mount /dev/sda5 /mnt/home
+
+nmtui
+symlink to ~/.cache ~/Documents ~/Downloads /var/cache /var/log
+
+sudo rm -rf /var/tmp && sudo ln -s /mnt/common/arch/var/tmp /var/tmp
+
+#qemu
+qemu-full bridge-utils virt-manager dmicode dnsmasq iptables-nft
