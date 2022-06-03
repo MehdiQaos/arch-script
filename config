@@ -3,13 +3,13 @@
 echo -e "\nUpdating Pacman Configuration (this time for installation destination system)...\n"
 sed -i 's #Color Color ; s #\[multilib\] \[multilib\] ; /\[multilib\]/{n;s #Include Include }' /etc/pacman.conf
 
-sudo pacman -Sy
+pacman -Sy
 
-echo -e "--save /etc/pacman.d/mirrorlist\n--country Sweden,Denmark\n--protocol https\n--score 10\n"
+echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
 reflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
 
 echo -e "\nReading all fields from the file confidentials...\n"
-read -r user uspw rtpw host tmzn boot_lc < /root/confidentials
+read -r user uspw rtpw host tmzn grub_install_location < /root/confidentials
 echo -e "\nDone.\n\n"
 
 
@@ -37,10 +37,10 @@ useradd -m -G wheel -s /bin/bash $user
 # set user password
 echo -e "$uspw\n$uspw" | passwd $user
 
-echo -e "root ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/00_nopasswd
+echo -e "%wheel ALL=(ALL) ALL\nDefaults rootpw" > /etc/sudoers.d/99_wheel 
 
 echo vm.swappiness=1 >> /etc/sysctl.d/99-swappiness.conf
 
-grub-install --target=i386-pc $boot_lc
+grub-install --target=i386-pc $grub_install_location
 echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg

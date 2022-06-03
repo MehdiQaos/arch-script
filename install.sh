@@ -11,15 +11,21 @@ tmzn="Africa/Casablanca"
 #root location /dev/sda1
 rtlc=""
 #/dev/sda
-boot_lc=""
+grub_install_location=""
 #pckgs names file
 pckgs_file="pacstrap_pkgs"
 
-echo -e "$userName $userPassword $rootPassword $hostName $timeZone $boot_lc"> ./confidentials
+echo -e "$userName $userPassword $rootPassword $hostName $timeZone $grub_install_location"> ./confidentials
 #------------------------------------------------------------------------------------------------------------------------------------
 # enable options "color", "ParallelDownloads", "multilib (32-bit) repository"
 echo -e "\nModifying Pacman Configuration...\n"
 sed -i 's #Color Color ; s #ParallelDownloads ParallelDownloads ; s #\[multilib\] \[multilib\] ; /\[multilib\]/{n;s #Include Include }' /etc/pacman.conf
+echo -e "\nDone.\n\n"
+
+echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+echo -e "\nPerforming Initialization of Pacman Keyring...\n"
+pacman-key --init
+pacman-key --populate archlinux
 echo -e "\nDone.\n\n"
 #------------------------------------------------------------------------------------------------------------------------------------
 pacman -Sy
@@ -28,7 +34,7 @@ echo "mounting $rtlc to /mnt"
 mount $rtlc /mnt
 #------------------------------------------------------------------------------------------------------------------------------------
 # save preferred configuration for the reflector systemd service
-echo -e "--save /etc/pacman.d/mirrorlist\n--country Sweden,Denmark\n--protocol https\n--score 10\n"
+echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
 reflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
 echo -e "\nDone.\n\n"
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -54,6 +60,4 @@ arch-chroot /mnt /root/config
 # remove files that are unnecessary now
 rm /mnt/root/{confidentials,config}
 umount -a
-echo -e "\nInstallation Complete.\n\nSystem will reboot in 10 seconds..."
-sleep 10
-reboot
+echo -e "\nInstallation Complete.\nyou can reboot now\n"
