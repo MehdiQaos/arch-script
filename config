@@ -3,6 +3,12 @@
 echo -e "\nUpdating Pacman Configuration (this time for installation destination system)...\n"
 sed -i 's #Color Color ; s #\[multilib\] \[multilib\] ; /\[multilib\]/{n;s #Include Include }' /etc/pacman.conf
 
+echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+echo -e "\nPerforming Initialization of Pacman Keyring...\n"
+pacman-key --init
+pacman-key --populate archlinux
+echo -e "\nDone.\n\n"
+#------------------------------------------------------------------------------------------------------------------------------------
 pacman -Sy
 
 echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
