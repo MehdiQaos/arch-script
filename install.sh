@@ -15,7 +15,7 @@ grub_install_location=""
 #pckgs names file
 pckgs_file="pacstrap_pkgs"
 
-echo -e "$userName $userPassword $rootPassword $hostName $timeZone $grub_install_location"> ./confidentials
+echo -e "$user $uspw $rtpw $host $tmzn $grub_install_location"> ./confidentials
 #------------------------------------------------------------------------------------------------------------------------------------
 # enable options "color", "ParallelDownloads", "multilib (32-bit) repository"
 echo -e "\nModifying Pacman Configuration...\n"
