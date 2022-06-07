@@ -3,9 +3,9 @@
 user="mehdi"
 host="archmehdi"
 #user password
-uspw="piq"
+uspw=""
 #root password
-rtpw="piq"
+rtpw=""
 #timezone
 tmzn="Africa/Casablanca"
 #root location /dev/sda1
