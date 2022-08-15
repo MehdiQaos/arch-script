@@ -1,0 +1,12 @@
+##dual boot with windows efi
+dont make new efi partition, mount windows efi partition to /mnt/boot/efi
+after pacstrap and arch-chroot install grub:
+mkinitcpio -P: pacstrap call it by default after linux package install
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB: arch-chroot before this
+you can modifie grub config file: /etc/default/grub
+grub-mkconfig -o /boot/grub/grub.cfg
+
+##pyautogui install
+pip install pyautogui
+pip install Pillow
+sudo pacman -S tk
