@@ -1,7 +1,7 @@
 #!/bin/bash
 
-user="mehdi"
-host="archmehdi"
+user=""
+host=""
 #user password
 uspw=""
 #root password
@@ -9,13 +9,41 @@ rtpw=""
 #timezone
 tmzn="Africa/Casablanca"
 #root location /dev/sda1
-rtlc="/dev/sda2"
+rtlc="/dev/sda10"
 #/dev/sda
-grub_install_location="/dev/sda"
+home_partition="/dev/sda9"
 #pckgs names file
 pckgs_file="pacstrap_pkgs"
+#efi partition
+efip="/dev/sda8"
 
-echo -e "$user $uspw $rtpw $host $tmzn $grub_install_location"> ./confidentials
+if [[ -z $user ]]; then
+  echo "give username: "
+  read $user
+fi
+
+if [[ -z $host ]]; then
+  echo "give host name: "
+  read $host
+fi
+
+if [[ -z $uspw ]]; then
+  echo "give host user password: "
+  read $uspw
+fi
+
+if [[ -z $rtpw ]]; then
+  echo "give host root password: "
+  read $rtpw
+fi
+
+if [[ -z $efip ]]; then
+  echo "give efi partition: "
+  read $efip
+fi
+
+echo -e "$user $uspw $rtpw $host $tmzn"> ./confidentials
+
 #------------------------------------------------------------------------------------------------------------------------------------
 # enable options "color", "ParallelDownloads", "multilib (32-bit) repository"
 echo -e "\nModifying Pacman Configuration...\n"
@@ -30,17 +58,21 @@ echo -e "\nDone.\n\n"
 #------------------------------------------------------------------------------------------------------------------------------------
 pacman -Sy
 
-echo "mounting $rtlc to /mnt"
+#echo "mounting $rtlc to /mnt"
+#mkfs.ext4 -L root $rtlc
 mount $rtlc /mnt
 echo "mounting home from $rtlc to /mnt/home"
 mkdir /mnt/home
 mount $home_partition /mnt/home
+
+mkdir /mnt/boot/efi
+mount $efip /boot/efi
 #------------------------------------------------------------------------------------------------------------------------------------
 # save preferred configuration for the reflector systemd service
 echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
-reflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
+reflector --save /etc/pacman.d/mirrorlist --country Spain,Germany --protocol https --score 10 --verbose
 echo -e "\nDone.\n\n"
-#------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------
 # edit and adjust the "pkgs" file for desired packages (don't worry about any extra white spaces or new lines or comments as they will be omitted using sed and tr)
 echo -e "\nPerforming Pacstrap Operation...\n"
 pacstrap /mnt $(cat $pckgs_file | sed 's #.*$  g' | tr '\n' ' ')
@@ -62,5 +94,5 @@ chmod a+x /mnt/root/config
 arch-chroot /mnt /root/config
 # remove files that are unnecessary now
 rm /mnt/root/{confidentials,config}
-umount -a
+#umount -a
 echo -e "\nInstallation Complete.\nyou can reboot now\n"

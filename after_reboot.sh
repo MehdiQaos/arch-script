@@ -2,8 +2,13 @@ pckgs_file="pckgs"
 
 sudo pacman -S $(cat $pckgs_file | sed 's #.*$  g' | tr '\n' ' ')
 
-mkdir ~/.npm-global
-npm config set prefix '~/.npm-global'
+if [[ ! -e "~/.npm-global" ]]; then
+  mkdir ~/.npm-global
+fi
+
+if [[ $(which npm 2> /dev/null) ]]; then
+  npm config set prefix '~/.npm-global'
+fi
 
 sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
 sudo chmod a+rx /usr/local/bin/yt-dlp
@@ -17,7 +22,6 @@ python -m pip install --user pipx
 python -m pip install --user virtualenv
 
 sudo systemctl enable lightdm.service
-sudo systemctl enable fstrim.timer
+#sudo systemctl enable fstrim.timer
 
-git clone https://aur.archlinux.org/yay-bin.git; cd yay-bin; makepkg -si
-yay -S google-chrome megasync-bin visual-studio-code-bin ttf-ancient-fonts ookla-speedtest-bin
+git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si && yay -S google-chrome megasync-bin visual-studio-code-bin ttf-ancient-fonts ookla-speedtest-bin
