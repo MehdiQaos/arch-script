@@ -12,10 +12,10 @@ echo -e "\nDone.\n\n"
 pacman -Sy
 
 echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
-reflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
+eflector --save /etc/pacman.d/mirrorlist --country France,Spain,Germany --protocol https --score 10 --verbose
 
 echo -e "\nReading all fields from the file confidentials...\n"
-read -r user uspw rtpw host tmzn grub_install_location < /root/confidentials
+read -r user uspw rtpw host tmzn bootpath < /root/confidentials
 echo -e "\nDone.\n\n"
 
 
@@ -48,6 +48,6 @@ echo vm.swappiness=1 >> /etc/sysctl.d/99-swappiness.conf
 
 systemctl enable NetworkManager
 
-grub-install --target=i386-pc $grub_install_location
-#echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
+grub-install --target=x86_64-efi --efi-directory=$bootpath --bootloader-id=GRUB
+echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
