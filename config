@@ -49,5 +49,5 @@ echo vm.swappiness=1 >> /etc/sysctl.d/99-swappiness.conf
 systemctl enable NetworkManager
 
 grub-install --target=i386-pc $grub_install_location
-#echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
+echo GRUB_DISABLE_OS_PROBER=false >> /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg

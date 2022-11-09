@@ -2,7 +2,7 @@ pckgs_file="pckgs"
 
 sudo pacman -S $(cat $pckgs_file | sed 's #.*$  g' | tr '\n' ' ')
 
-mkdir ~/.npm-global
+#mkdir ~/.npm-global
 npm config set prefix '~/.npm-global'
 
 sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp

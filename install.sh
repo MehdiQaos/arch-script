@@ -3,9 +3,9 @@
 user="mehdi"
 host="archmehdi"
 #user password
-uspw=""
+uspw="piq"
 #root password
-rtpw=""
+rtpw="piq"
 #timezone
 tmzn="Africa/Casablanca"
 #root location /dev/sda1
@@ -31,10 +31,10 @@ echo -e "\nDone.\n\n"
 pacman -Sy
 
 echo "mounting $rtlc to /mnt"
-mount $rtlc /mnt
-echo "mounting home from $rtlc to /mnt/home"
-mkdir /mnt/home
-mount $home_partition /mnt/home
+#mount $rtlc /mnt
+#echo "mounting home from $rtlc to /mnt/home"
+#mkdir /mnt/home
+#mount $home_partition /mnt/home
 #------------------------------------------------------------------------------------------------------------------------------------
 # save preferred configuration for the reflector systemd service
 echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
@@ -62,5 +62,5 @@ chmod a+x /mnt/root/config
 arch-chroot /mnt /root/config
 # remove files that are unnecessary now
 rm /mnt/root/{confidentials,config}
-umount -a
+#umount -a
 echo -e "\nInstallation Complete.\nyou can reboot now\n"
