@@ -8,11 +8,13 @@ uspw=""
 rtpw=""
 #timezone
 tmzn="Africa/Casablanca"
-#root location /dev/nvme0n1p6
+#root location /dev/nvme0n1p4
 rtlc="/dev/nvme0n1p4"
+#home location /dev/nvme0n1p5
+$home_partition="/dev/nvme0n1p5"
 #/dev/nvme0n1p1
 efip="/dev/nvme0n1p1"
-bootpath="/boot/efi"
+bootpath="boot/efi"
 #pckgs names file
 pckgs_file="pacstrap_pkgs"
 
@@ -56,13 +58,17 @@ echo -e "\nDone.\n\n"
 #------------------------------------------------------------------------------------------------------------------------------------
 pacman -Sy
 
+# format root and home
+#mkfs.ext4 -L root $rtlc
+#mkfs.ext4 -L home $home_partition
+
 echo "mounting $rtlc to /mnt"
 mount $rtlc /mnt
 echo "mounting home from $rtlc to /mnt/home"
 mkdir /mnt/home
 mount $home_partition /mnt/home
-mkdir "/mnt$bootpath"
-mount $efip "/mnt$bootpath"
+mkdir -p "/mnt/$bootpath"
+mount $efip "/mnt/$bootpath"
 #------------------------------------------------------------------------------------------------------------------------------------
 # save preferred configuration for the reflector systemd service
 echo -e "--save /etc/pacman.d/mirrorlist\n--country France,Spain,Germany\n--protocol https\n--score 10\n"
