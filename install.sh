@@ -1,7 +1,7 @@
 #!/bin/bash
 
-user=""
-host=""
+user="mehdi"
+host="arch-youcode"
 #user password
 uspw=""
 #root password
@@ -9,37 +9,37 @@ rtpw=""
 #timezone
 tmzn="Africa/Casablanca"
 #root location /dev/nvme0n1p6
-rtlc="/dev/nvme0n1p6"
+rtlc="/dev/nvme0n1p4"
 #/dev/nvme0n1p1
 efip="/dev/nvme0n1p1"
-bootpath="/boot"
+bootpath="/boot/efi"
 #pckgs names file
 pckgs_file="pacstrap_pkgs"
 
-if [[ -z $user ]]; then
-  echo "give username: "
-  read $user
-fi
+while [[ -z $user ]] || (( ${#user} < 5 )); do
+  echo "give username (minimum 5 characters): "
+  read user
+done
 
-if [[ -z $host ]]; then
-  echo "give host name: "
-  read $host
-fi
+while [[ -z $host ]] || (( ${#host} < 5 )); do
+	echo "give host name (minimum 5 characters): "
+  read host
+done
 
-if [[ -z $uspw ]]; then
-  echo "give host user password: "
-  read $uspw
-fi
+while [[ -z $uspw ]] || (( ${#uspw} < 3 )); do
+  echo "give host user password (minimum 3 characters): "
+  read -s uspw
+done
 
-if [[ -z $rtpw ]]; then
-  echo "give host root password: "
-  read $rtpw
-fi
+while [[ -z $rtpw ]] || (( ${#rtpw} < 3 )); do
+  echo "give host root password (minimum 3 characters): "
+  read -s rtpw
+done
 
-if [[ -z $efip ]]; then
-  echo "give efi partition (/dev/sda#): "
-  read $efip
-fi
+while [[ -z $efip ]]; do
+  echo "give efi partition (full path like: /dev/sda#): "
+  read efip
+done
 
 echo -e "$user $uspw $rtpw $host $tmzn $bootpath"> ./confidentials
 #------------------------------------------------------------------------------------------------------------------------------------
