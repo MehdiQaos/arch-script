@@ -1,0 +1,5 @@
+##firefox
+#vaapi
+type about:config in the address bar.
+in the search bar type gfx.webrender.all and set it to true.
+in the search bar type media.ffmpeg.vaapi.enabled and set it to true.
